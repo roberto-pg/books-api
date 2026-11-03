@@ -1,0 +1,12 @@
+# Pastas de build e binários do .NET
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+
+# Variáveis de ambiente sensíveis (nunca suba o .env real para o GitHub)
+.env
+
+# Logs e arquivos de sistema
+*.log
+.DS_Store

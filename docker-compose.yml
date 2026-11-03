@@ -1,0 +1,44 @@
+﻿networks:
+  net:
+    driver: bridge
+
+services:
+  db:
+    image: postgres:17.5-alpine3.22
+    container_name: book-db
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - net
+      
+  api:
+    build: .
+    container_name: book
+    ports:
+      - "5001:8080"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    networks:
+      - net
+    volumes:
+      - book_images:/app/wwwroot/images
+      
+volumes:
+  postgres_data:
+  book_images:
