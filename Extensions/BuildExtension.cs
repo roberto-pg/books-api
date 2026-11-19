@@ -32,7 +32,7 @@ public static class BuildExtension
         var origins =
             config["CORS_ORIGINS"]
                 ?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) ??
-            ["http://localhost:3000"];
+            ["http://localhost:3001"];
 
         var exposedHeader = config["CORS_EXPOSED_HEADERS"];
 
